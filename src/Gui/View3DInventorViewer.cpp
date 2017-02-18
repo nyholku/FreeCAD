@@ -532,11 +532,13 @@ void View3DInventorViewer::init()
     cursor = QBitmap::fromData(QSize(PAN_WIDTH, PAN_HEIGHT), pan_bitmap);
     mask = QBitmap::fromData(QSize(PAN_WIDTH, PAN_HEIGHT), pan_mask_bitmap);
     panCursor = QCursor(cursor, mask, PAN_HOT_X, PAN_HOT_Y);
+    naviCube = new NaviCube(this);
 }
 
 View3DInventorViewer::~View3DInventorViewer()
 {
-    // cleanup
+	delete naviCube;
+   // cleanup
     this->backgroundroot->unref();
     this->backgroundroot = 0;
     this->foregroundroot->unref();
@@ -594,7 +596,7 @@ void View3DInventorViewer::initialize()
 void View3DInventorViewer::OnChange(Gui::SelectionSingleton::SubjectType& rCaller,
                                     Gui::SelectionSingleton::MessageType Reason)
 {
-    Q_UNUSED(rCaller); 
+    Q_UNUSED(rCaller);
     if (Reason.Type == SelectionChanges::AddSelection ||
         Reason.Type == SelectionChanges::RmvSelection ||
         Reason.Type == SelectionChanges::SetSelection ||
@@ -1484,6 +1486,8 @@ void View3DInventorViewer::renderScene(void)
         this->drawAxisCross();
     }
 
+    naviCube->drawNaviCube();
+
 #if defined (ENABLE_GL_DEPTH_RANGE)
     // using the main portion of z-buffer again (for frontbuffer highlighting)
     glDepthRange(0.1,1.0);
@@ -1597,6 +1601,8 @@ void View3DInventorViewer::selectAll()
 
 bool View3DInventorViewer::processSoEvent(const SoEvent* ev)
 {
+	if (naviCube->processSoEvent(ev))
+		return true;
     if (isRedirectedToSceneGraph()) {
         SbBool processed = inherited::processSoEvent(ev);
 

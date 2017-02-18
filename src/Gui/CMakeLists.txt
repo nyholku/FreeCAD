@@ -27,6 +27,7 @@ if (BUILD_ADDONMGR)
 endif(BUILD_ADDONMGR)
 
 include_directories(
+    ${EIGEN3_INCLUDE_DIR}
     ${CMAKE_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/Quarter
@@ -815,12 +816,14 @@ SET(View3D_CPP_SRCS
     SplitView3DInventor.cpp
     View.cpp
     View3DInventor.cpp
+
     View3DInventorExamples.cpp
     View3DInventorViewer.cpp
     View3DInventorRiftViewer.cpp
     CoinRiftWidget.cpp
     View3DPy.cpp
     View3DViewerPy.cpp
+    NaviCube.cpp
 )
 SET(View3D_SRCS
     ${View3D_CPP_SRCS}
@@ -837,6 +840,7 @@ SET(View3D_SRCS
     View3DInventorRiftViewer.h
     CoinRiftWidget.h
     View3DViewerPy.h
+    NaviCube.h
 )
 SOURCE_GROUP("View3D" FILES ${View3D_SRCS})
 
@@ -860,8 +864,8 @@ else()
     qt4_wrap_cpp(Quarter_MOC_SRCS ${Quarter_MOC_HDR})
 endif()
 
-SET(Quarter_SRCS 
-    ${Quarter_CPP_SRC} 
+SET(Quarter_SRCS
+    ${Quarter_CPP_SRC}
     ${Quarter_H_SRC}
     ${Quarter_MOC_SRCS}
 )
@@ -1093,7 +1097,7 @@ SET(FreeCADGui_CPP_SRCS
     TransactionObject.cpp
     WinNativeGestureRecognizers.cpp
 )
-SET(FreeCADGui_SRCS 
+SET(FreeCADGui_SRCS
     Application.h
     AutoSaver.h
     BitmapFactory.h
