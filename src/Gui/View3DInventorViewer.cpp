@@ -1486,8 +1486,6 @@ void View3DInventorViewer::renderScene(void)
         this->drawAxisCross();
     }
 
-    naviCube->drawNaviCube();
-
 #if defined (ENABLE_GL_DEPTH_RANGE)
     // using the main portion of z-buffer again (for frontbuffer highlighting)
     glDepthRange(0.1,1.0);
@@ -1517,6 +1515,8 @@ void View3DInventorViewer::renderScene(void)
         stream << renderTime << " ms / " << 1000./renderTime << " fps";
         draw2DString(stream.str().c_str(), SbVec2s(10,10), SbVec2f(0.1f,0.1f));
     }
+
+    naviCube->drawNaviCube();
 
 #if 0 // this breaks highlighting of edges
     glEnable(GL_LIGHTING);

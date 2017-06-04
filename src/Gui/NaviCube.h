@@ -39,5 +39,10 @@ private:
 	NaviCubeImplementation* m_NaviCubeImplementation;
 };
 
+class HuuhaaClassPy : public Py::PythonExtension<HuuhaaClassPy> {
+public:
+    Py::Object huuhaa(const Py::Tuple&);
+	static void init_type() ;
+};
 
 #endif /* SRC_GUI_NAVICUBE_H_ */
